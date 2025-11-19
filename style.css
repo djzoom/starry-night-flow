@@ -1,0 +1,232 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('starry-night.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    /* Default brightness handled by JS now, but set init here */
+    filter: brightness(0.8); 
+    transition: filter 0.2s;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Toggle Button */
+.toggle-btn {
+    position: absolute;
+    top: 20px;
+    left: 280px; /* Aligned with panel right edge */
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    z-index: 20;
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.controls-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 300px;
+    max-height: 90vh;
+    background: rgba(20, 20, 30, 0.7); /* Slightly darker for readability */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 20px;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s;
+    user-select: none;
+    z-index: 10;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.controls-container.collapsed {
+    transform: translateX(-340px); /* Move off screen */
+    opacity: 0.5;
+}
+
+/* Adjust toggle button position when collapsed */
+.controls-container.collapsed + .toggle-btn, /* If button is sibling after */
+.toggle-btn { 
+   /* Since button is fixed position relative to screen, we need JS or clever CSS. 
+      Simpler approach: Put button inside container? No, then it hides.
+      Put button outside. When container moves left, button moves left? 
+      Actually, let's keep button fixed at top-left corner when collapsed.
+   */
+}
+
+/* Override for button movement */
+.controls-container.collapsed ~ .toggle-btn {
+    left: 20px;
+    background: rgba(20, 20, 30, 0.6);
+}
+
+.scrollable-content {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+/* Scrollbar styling */
+.scrollable-content::-webkit-scrollbar {
+    width: 4px;
+}
+.scrollable-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, #f3ec78, #af4261);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header p {
+    margin: 5px 0 15px 0;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #a8a8a8;
+    font-weight: 500;
+}
+
+.caption {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+input[type=range] {
+    width: 100%;
+    background: transparent;
+    -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: background 0.2s, transform 0.2s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    background: #ffd700; 
+    transform: scale(1.1);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px;
+    flex: 1;
+}
+
+.primary-btn {
+    background: linear-gradient(45deg, #FF512F, #DD2476);
+    border: none;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    box-shadow: 0 0 15px rgba(221, 36, 118, 0.4);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+}

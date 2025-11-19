@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Van Gogh's Psychedelic Starry Night</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Load GIF.js -->
+    <script src="gif.js"></script>
+    <!-- Load Image Data (Base64) to bypass CORS -->
+    <script src="image_data.js"></script>
+</head>
+<body>
+    <!-- Background Image Layer -->
+    <div id="bg-container"></div>
+    
+    <canvas id="canvas"></canvas>
+    
+    <!-- Toggle Button -->
+    <button id="toggleConsole" class="toggle-btn">×</button>
+
+    <div class="controls-container">
+        <div class="header">
+            <h2>星夜幻境控制台</h2>
+            <p>Starry Night Controls</p>
+        </div>
+        
+        <div class="scrollable-content">
+            <div class="control-group">
+                <label>流速 (Flow Speed)</label>
+                <input type="range" id="speed" min="0" max="3" step="0.1" value="1.0">
+            </div>
+
+            <div class="control-group">
+                <label>湍流强度 (Swirl)</label>
+                <input type="range" id="swirl" min="50" max="800" step="10" value="400">
+                <div class="caption">左: 狂乱 - 右: 平缓</div>
+            </div>
+
+            <div class="control-group">
+                <label>笔触残留 (Trail Length)</label>
+                <!-- Lower value = Longer trails -->
+                <input type="range" id="trailFade" min="0.005" max="0.2" step="0.005" value="0.03">
+                <div class="caption">左: 极长 - 右: 短促</div>
+            </div>
+            
+            <div class="control-group">
+                <label>笔触不透明度 (Opacity)</label>
+                <input type="range" id="opacity" min="0.1" max="1.0" step="0.05" value="0.8">
+            </div>
+            
+            <div class="control-group">
+                <label>背景暗度 (Background Dim)</label>
+                <input type="range" id="bgDim" min="0" max="1" step="0.05" value="0.4">
+                <div class="caption">左: 亮(原画) - 右: 暗(特效)</div>
+            </div>
+
+            <div class="control-group">
+                <label>失焦程度 (Blur/Bokeh)</label>
+                <input type="range" id="blurLevel" min="0" max="20" step="1" value="0">
+            </div>
+
+            <div class="control-group">
+                <label>色相流动 (Psychedelic)</label>
+                <input type="range" id="colorShift" min="0" max="5" step="0.1" value="0.0">
+            </div>
+            
+            <div class="control-group">
+                <label>粒子数量 (Density)</label>
+                <input type="range" id="particleCount" min="1000" max="10000" step="500" value="5000">
+            </div>
+
+            <div class="control-group action-buttons">
+                <button id="resetBtn" class="secondary-btn">重置画布</button>
+                <button id="recordBtn" class="primary-btn">录制 10秒 GIF</button>
+            </div>
+            
+            <div class="status">
+                <span id="fps">FPS: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
