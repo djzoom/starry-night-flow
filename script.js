@@ -1,10 +1,19 @@
-    const toggleBtn = document.getElementById('toggleConsole');
-    const controls = document.querySelector('.controls-container');
-    if (toggleBtn && controls) {
-        toggleBtn.addEventListener('click', () => {
-            const isCollapsed = controls.classList.toggle('collapsed');
-            // Also toggle class on button for styling if needed
-            toggleBtn.classList.toggle('collapsed', isCollapsed);
-            toggleBtn.innerText = isCollapsed ? '☰' : '×';
-        });
+    if (image.complete && image.naturalWidth !== 0) {
+        console.log("Image loaded successfully, width:", image.naturalWidth);
+        const screenRatio = canvas.width / canvas.height;
+        const imgRatio = image.width / image.height;
+        let scale;
+        
+        if (screenRatio > imgRatio) {
+            scale = canvas.width / image.width;
+        } else {
+            scale = canvas.height / image.height;
+        }
+        
+        imgRenderRect.w = image.width * scale;
+        imgRenderRect.h = image.height * scale;
+        imgRenderRect.x = (canvas.width - imgRenderRect.w) / 2;
+        imgRenderRect.y = (canvas.height - imgRenderRect.h) / 2;
+
+        calculateFlowField();
     }
